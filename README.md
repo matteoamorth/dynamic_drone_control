@@ -10,5 +10,6 @@ The nonlinear dynamical model of a multirotor UAV often used for control purpose
 
 $fhgg$
 
-1. stability of the system
-2.  
+1. Controllability of the system
+2. Design of a full-state static feedback controller
+3. State space representation with perturbations
