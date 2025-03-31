@@ -38,60 +38,58 @@ $$
 The state space, output, and input vectors are defined as:
 
 $$
-\begin{aligned}
-x &= \begin{bmatrix} e_z \\ v_z \\ e_\psi \\ \omega_z \end{bmatrix} &
-z &= \begin{bmatrix} e_z \\ e_\psi \end{bmatrix} &
-u &= \begin{bmatrix} \hat{f} \\ \tau_C \end{bmatrix}
-\end{aligned}
+x = \begin{bmatrix} e_z \\ v_z \\ e_\psi \\ \omega_z \end{bmatrix}, \quad
+z = \begin{bmatrix} e_z \\ e_\psi \end{bmatrix}, \quad
+u = \begin{bmatrix} \hat{f} \\ \tau_C \end{bmatrix}
 $$
 
-### State Space Variables:
-- $e_z$: altitude error
-- $v_z$: vertical velocity
-- $e_\psi$: heading error
-- $\omega_z$: angular velocity around the vertical axis
-
-### System Control Inputs:
-- $\hat{f}$: modified thrust force
-- $\tau_C$: control torque
-
-## State Space Structure ⚙️
+### State Space Structure ⚙️
 
 The system representation is:
 
 $$
-\left\{
-\begin{array}{l}
-\dot{x} = A \cdot x + B \cdot u \\
+\dot{x} = A \cdot x + B \cdot u
+$$
+$$
 z = C \cdot x + D \cdot u
-\end{array}
-\right.
 $$
 
-### System Matrices:
+Where the system matrices are as follows:
+
+- **Matrix A**:
 $$
-\begin{array}{@{}cc@{}}
 A = \begin{bmatrix}
     0 & 1 & 0 & 0 \\
     0 & 0 & 0 & 0 \\
     0 & 0 & 0 & 1 \\
     0 & 0 & 0 & 0
-\end{bmatrix} &
+\end{bmatrix}
+$$
+
+- **Matrix B**:
+$$
 B = \begin{bmatrix}
     0 & 0 \\
     \frac{1}{m_d} & 0 \\
     0 & 0 \\
-    0 & \frac{1}{I_z} \\
+    0 & \frac{1}{I_z}
 \end{bmatrix}
+$$
+
+- **Matrix C**:
+$$
 C = \begin{bmatrix}
     1 & 0 & 0 & 0 \\
     0 & 0 & 1 & 0
 \end{bmatrix}
+$$
+
+- **Matrix D**:
+$$
 D = \begin{bmatrix}
     0 & 0 \\
     0 & 0
 \end{bmatrix}
-\end{array}
 $$
 
 To check the controllability of the system, an evaluation was performed with MatLab. Since the rank of $A$ matches its size, the system is deemed controllable.
@@ -144,18 +142,16 @@ $$
 With new terms added, the system evolves as:
 
 $$
-\left\{
-\begin{array}{l}
-\dot{x} = A \cdot x + B \cdot u + E \cdot w \\
+\dot{x} = A \cdot x + B \cdot u + E \cdot w
+$$
+$$
 z = C \cdot x + D \cdot u + F \cdot w
-\end{array}
-\right.
 $$
 
 The state space now includes: $x = [\sigma_z \quad e_z \quad v_z \quad \sigma_\psi \quad e_\psi \quad \omega_z]^T$, but the output vector remains the same. The new matrices are:
 
+- **Matrix A (with perturbations)**:
 $$
-\begin{array}{@{}cc@{}}
 A = \begin{bmatrix}
     0 & 1 & 0 & 0 & 0 & 0 \\
     0 & 0 & 1 & 0 & 0 & 0 \\
@@ -164,22 +160,18 @@ A = \begin{bmatrix}
     0 & 0 & 0 & 0 & 0 & 1 \\
     0 & 0 & 0 & 0 & 0 & 0 \\
 \end{bmatrix}
-\end{array}
 $$
 
-### New Matrices:
-
+- **Matrix B (with perturbations)**:
 $$
-\begin{array}{@{}cc@{}}
 B = \begin{bmatrix}
     0 & 0 \\
     0 & 0 \\
     0 & 0 \\
     \frac{1}{m_d} & 0 \\
     0 & 0 \\
-    0 & \frac{1}{I_z} \\
+    0 & \frac{1}{I_z}
 \end{bmatrix}
-\end{array}
 $$
 
 ### Optimality Curve 📉
